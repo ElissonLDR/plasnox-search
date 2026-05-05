@@ -31,6 +31,7 @@
 		self.modeT = $wrapper.data( 'mode-t' ) || self.modeD;
 		self.modeM = $wrapper.data( 'mode-m' ) || self.modeT;
 
+		self.resetState();
 		self.applyMode();
 		self.bind();
 	}
@@ -44,18 +45,29 @@
 
 	PlsInstance.prototype.applyMode = function () {
 		var mode = this.currentMode();
-		// Sempre começa removendo tudo — estado limpo garantido
+		if ( mode === 'open' ) {
+			// Modo sempre aberto: garante classe correta, não fecha o que está aberto
+			this.$wrapper.addClass( 'pls-mode-open' ).removeClass( 'pls-open' );
+			this.$input.attr( 'tabindex', '0' );
+			this.isOpen = true;
+		} else {
+			// Modo ícone: remove classes de modo aberto mas NÃO fecha se já estiver aberto pelo usuário
+			this.$wrapper.removeClass( 'pls-mode-open' );
+			if ( ! this.isOpen ) {
+				this.$wrapper.removeClass( 'pls-open' );
+				this.$input.attr( 'tabindex', '-1' );
+			}
+		}
+	};
+
+	// Chamado apenas na inicialização para garantir estado limpo
+	PlsInstance.prototype.resetState = function () {
 		this.$wrapper.removeClass( 'pls-mode-open pls-open pls-loading' );
 		this.$results.removeClass( 'pls-open' );
 		this.isOpen = false;
 		this.$input.attr( 'tabindex', '-1' );
 		clearTimeout( this.timer );
-
-		if ( mode === 'open' ) {
-			this.$wrapper.addClass( 'pls-mode-open' );
-			this.$input.attr( 'tabindex', '0' );
-			this.isOpen = true;
-		}
+		this.last = '';
 	};
 
 	PlsInstance.prototype.bind = function () {
@@ -258,13 +270,7 @@
 	function initAll() {
 		$( '.pls-wrapper' ).each( function () {
 			var $w = $( this );
-			var inst = $w.data( 'pls-init' );
-			if ( inst ) {
-				// já inicializado: garante estado limpo
-				if ( inst.currentMode() !== 'open' ) {
-					inst.closeSearch( true );
-				}
-			} else {
+			if ( ! $w.data( 'pls-init' ) ) {
 				$w.data( 'pls-init', new PlsInstance( $w ) );
 			}
 		} );
@@ -278,9 +284,8 @@
 			$( '.pls-wrapper' ).each( function () {
 				var inst = $( this ).data( 'pls-init' );
 				if ( inst ) {
-					if ( inst.currentMode() !== 'open' ) {
-						inst.closeSearch( true );
-					}
+					inst.resetState();
+					inst.applyMode();
 				}
 			} );
 		}
