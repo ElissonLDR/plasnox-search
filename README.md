@@ -8,62 +8,62 @@
 
 O site da Plasnox possui **três tipos diferentes de conteúdo pesquisável** que a busca nativa do WordPress não cobria de forma unificada:
 
-| # | Tipo de conteúdo | Onde fica |
+| # | Tipo de conteúdo | Exemplos |
 |---|---|---|
 | 1 | **Produtos WooCommerce** | Empilhadeiras, paleteiras, plataformas, rampas e acessórios |
 | 2 | **Categorias de produto** | Diesel, Elétrica, GLP, Conexões Industriais, Válvulas… |
 | 3 | **Páginas da Linha Industrial** | Landing pages de soluções filhas da hierarquia *Soluções → Metais* |
 
-A busca nativa do WordPress retornava apenas posts/páginas genéricas. Os produtos WooCommerce e as categorias ficavam de fora, e as landing pages industriais não tinham nenhum mecanismo de descoberta rápida.
+A busca nativa do WordPress retornava apenas posts e páginas genéricas. Os produtos WooCommerce e categorias ficavam de fora, e as landing pages industriais não tinham nenhum mecanismo de descoberta rápida.
 
 ---
 
 ## ✨ Funcionalidades
 
 - 🔎 **Busca unificada** — produtos, categorias e páginas industriais em uma única consulta AJAX
-- ⚡ **Live search** com debounce de 300 ms — pesquisa enquanto digita sem sobrecarregar o servidor
-- 🎛️ **Widget nativo do Elementor** — arraste, solte e configure visualmente, sem código
+- ⚡ **Busca em tempo real** com debounce de 300 ms — pesquisa enquanto digita sem sobrecarregar o servidor
+- 🎛️ **Widget nativo do Elementor** — arraste, solte e configure visualmente, sem escrever código
 - 📱 **Responsivo por dispositivo** — modo e largura configuráveis separadamente para Desktop, Tablet e Mobile
-- 🎨 **Totalmente estilizável** — controles de cor, tipografia, borda, sombra e espaçamento direto no Elementor
+- 🎨 **Totalmente estilizável** — controles de cor, tipografia, borda, sombra e espaçamento direto no painel do Elementor
 - 🔁 **Dois modos de exibição** — *Ícone (expandir ao clicar)* ou *Sempre aberto*
-- ⌨️ **Navegação por teclado** — ↑ ↓ Enter Escape funcionam no dropdown
-- 🔒 **Seguro** — nonce AJAX em todas as requisições, sanitização de inputs
-- 🧱 **Compatível com múltiplas instâncias** — pode ser usado em header, footer e páginas ao mesmo tempo
+- ⌨️ **Navegação por teclado** — setas ↑ ↓, Enter e Escape funcionam no dropdown de resultados
+- 🔒 **Seguro** — nonce AJAX em todas as requisições e sanitização de entradas
+- 🧱 **Múltiplas instâncias** — pode ser usado no cabeçalho, rodapé e páginas ao mesmo tempo
 
 ---
 
-## 🖥️ Demonstração de Uso
+## 🖥️ Como Funciona Visualmente
 
 ```
 Fechado:   [ 🔍 ]
 Aberto:    [ ___________________________ ][ 🔍 ]
 
 Resultado:
-┌─────────────────────────────────┐
-│ PRODUTOS                        │
-│  🖼  Empilhadeira Diesel 2.5t   │
-│  🖼  Empilhadeira Elétrica 3.5t │
-│ CATEGORIAS                      │
-│  🖼  Diesel  · 10 produtos      │
-│  🖼  GLP     ·  4 produtos      │
-│ SOLUÇÕES INDUSTRIAIS            │
-│  🖼  Válvulas                   │
-│  🖼  Conexões                   │
-└─────────────────────────────────┘
+┌──────────────────────────────────┐
+│ PRODUTOS                         │
+│  🖼  Empilhadeira Diesel 2.5t    │
+│  🖼  Empilhadeira Elétrica 3.5t  │
+│ CATEGORIAS                       │
+│  🖼  Diesel  · 10 produtos       │
+│  🖼  GLP     ·  4 produtos       │
+│ SOLUÇÕES INDUSTRIAIS             │
+│  🖼  Válvulas                    │
+│  🖼  Conexões                    │
+└──────────────────────────────────┘
 ```
 
 ---
 
 ## 📦 Instalação
 
-### Via FTP / File Manager
+### Via FTP ou Gerenciador de Arquivos
 1. Faça upload da pasta `plasnox-search/` para `wp-content/plugins/`
-2. Acesse **WP Admin → Plugins → Plugins Instalados**
+2. Acesse **Painel WP → Plugins → Plugins Instalados**
 3. Ative o **Plasnox Search**
 
-### Via WordPress Admin
+### Via Painel do WordPress
 1. Compacte a pasta `plasnox-search/` em um arquivo `.zip`
-2. Acesse **WP Admin → Plugins → Adicionar Novo → Enviar Plugin**
+2. Acesse **Painel WP → Plugins → Adicionar Novo → Enviar Plugin**
 3. Selecione o `.zip` e clique em **Instalar Agora**
 4. Ative o plugin
 
@@ -73,16 +73,16 @@ Resultado:
 
 ### Widget do Elementor *(recomendado)*
 1. Abra qualquer página no **Elementor**
-2. No painel de widgets, pesquise **"Plasnox Search"**
-3. Arraste o widget para a posição desejada (header, hero, sidebar…)
-4. Configure nos painéis **Conteúdo** e **Estilo**
+2. No painel de widgets, pesquise por **"Plasnox Search"**
+3. Arraste o widget para a posição desejada (cabeçalho, hero, barra lateral…)
+4. Configure as opções nas abas **Conteúdo** e **Estilo**
 
 ### Shortcode
 Insira em qualquer página, post ou widget de texto:
 ```
 [plasnox_search]
 ```
-> ⚠️ No Elementor, use o widget dedicado **Shortcode** para inserir o código acima.
+> ⚠️ Dentro do Elementor, utilize o widget dedicado **Shortcode** para inserir o código acima.
 
 ---
 
@@ -93,7 +93,7 @@ Insira em qualquer página, post ou widget de texto:
 
 | Controle | Descrição |
 |---|---|
-| Modo de exibição | `Ícone (expandir)` ou `Sempre aberto` — configurável por Desktop / Tablet / Mobile |
+| Modo de exibição | `Ícone (expandir)` ou `Sempre aberto` — configurável por Desktop, Tablet e Mobile |
 | Largura do campo | Largura em px do input expandido — responsivo |
 | Placeholder | Texto exibido quando o campo está vazio |
 
@@ -108,7 +108,7 @@ Insira em qualquer página, post ou widget de texto:
 | Tamanho do ícone | Tamanho do SVG da lupa |
 | Cor do ícone | Normal e Hover |
 | Cor de fundo | Normal e Hover |
-| Borda | Cor, espessura (Group Control) |
+| Borda | Cor e espessura |
 | Raio da borda | Independente por canto |
 | Sombra | Box shadow normal e hover |
 
@@ -119,8 +119,8 @@ Insira em qualquer página, post ou widget de texto:
 
 | Controle | Descrição |
 |---|---|
-| Tipografia | Família, tamanho, peso, etc. |
-| Cor do texto | Cor digitada |
+| Tipografia | Família, tamanho, peso e demais opções |
+| Cor do texto | Cor do que é digitado |
 | Cor do placeholder | Cor do texto de dica |
 | Cor de fundo | Background do input |
 | Borda | Cor e espessura |
@@ -136,10 +136,10 @@ Insira em qualquer página, post ou widget de texto:
 | Controle | Descrição |
 |---|---|
 | Cor de fundo | Background do dropdown |
-| Cor da borda | Border do dropdown |
-| Raio da borda | Arredondamento |
+| Cor da borda | Borda do dropdown |
+| Raio da borda | Arredondamento dos cantos |
 | Sombra | Box shadow |
-| Altura máxima | Max-height com scroll |
+| Altura máxima | Limite de altura com rolagem |
 
 </details>
 
@@ -159,11 +159,11 @@ Tipografia, cor do texto, cor de fundo e padding dos cabeçalhos de seção (PRO
 | Cor do título | Normal e Hover |
 | Cor da seta | Normal e Hover |
 | Tipografia do título | Família, tamanho, peso… |
-| Cor da meta | SKU / contagem de produtos |
-| Tipografia da meta | |
-| Padding do card | |
-| Tamanho da imagem | Largura e altura do thumbnail |
-| Raio da imagem | Arredondamento do thumbnail |
+| Cor da informação extra | SKU do produto ou contagem de itens da categoria |
+| Tipografia da informação extra | |
+| Padding do card | Espaçamento interno |
+| Tamanho da imagem | Largura e altura da miniatura |
+| Raio da imagem | Arredondamento da miniatura |
 
 </details>
 
@@ -173,12 +173,12 @@ Tipografia, cor do texto, cor de fundo e padding dos cabeçalhos de seção (PRO
 
 ```
 plasnox-search/
-├── plasnox-search.php          # Bootstrap do plugin + registro do widget
+├── plasnox-search.php          # Inicialização do plugin, AJAX e registro do widget
 ├── includes/
-│   └── widget-elementor.php   # Widget Elementor completo (controles + render)
+│   └── widget-elementor.php   # Widget Elementor completo com todos os controles
 └── assets/
-    ├── plasnox-search.css      # Estilos base (variáveis sobrepostas pelo Elementor)
-    └── plasnox-search.js       # Live search, toggle, múltiplas instâncias, responsive
+    ├── plasnox-search.css      # Estilos base (sobrepostos pelo Elementor por widget)
+    └── plasnox-search.js       # Busca em tempo real, toggle, múltiplas instâncias e responsivo
 ```
 
 ---
@@ -190,28 +190,28 @@ plasnox-search/
 | WordPress | 6.0+ |
 | PHP | 7.4+ |
 | WooCommerce | 6.0+ |
-| Elementor | 3.0+ *(opcional, para o widget)* |
+| Elementor | 3.0+ *(opcional, apenas para o widget)* |
 
 ---
 
 ## 🔧 Detalhes Técnicos
 
-- **AJAX endpoint:** `wp_ajax_plasnox_search` + `wp_ajax_nopriv_plasnox_search`
-- **Nonce:** `pls_nonce` renovado em cada carregamento de página
-- **Busca de produtos:** `WP_Query` com `post_type=product`, `s=query`
-- **Busca de categorias:** `get_terms` com `taxonomy=product_cat`, `search=query`
-- **Busca de soluções:** localiza a página *Metais* via `get_page_by_path('solucoes/metais')`, coleta todos os filhos diretos via `get_posts(post_parent=metais_id)`, filtra por título com `mb_stripos`
+- **Endpoint AJAX:** `wp_ajax_plasnox_search` + `wp_ajax_nopriv_plasnox_search`
+- **Segurança:** nonce `pls_nonce` renovado a cada carregamento de página
+- **Busca de produtos:** `WP_Query` com `post_type=product` e parâmetro `s`
+- **Busca de categorias:** `get_terms` com `taxonomy=product_cat` e parâmetro `search`
+- **Busca de soluções:** localiza a página *Metais* via `get_page_by_path('solucoes/metais')`, coleta todos os filhos diretos com `get_posts(post_parent=metais_id)` e filtra por título usando `mb_stripos`
 - **Múltiplas instâncias:** cada `.pls-wrapper` é inicializado como objeto independente `PlsInstance`
-- **Responsive JS:** lê `data-mode-d/t/m` do wrapper e aplica o modo correto conforme `window.innerWidth`
+- **Responsivo via JS:** lê os atributos `data-mode-d`, `data-mode-t` e `data-mode-m` do wrapper e aplica o modo correto conforme `window.innerWidth`
 
 ---
 
 ## 🌐 Sobre a Plasnox
 
-O plugin foi desenvolvido para o site **[plasnox.com.br](https://plasnox.com.br)** — empresa industrial brasileira fundada em 1987, especializada em:
+Plugin desenvolvido para o site **[plasnox.com.br](https://plasnox.com.br)** — empresa industrial brasileira fundada em 1987, especializada em:
 
 - 🏗️ **Equipamentos de Movimentação** — empilhadeiras elétricas, GLP e diesel (1,5t a 16t), paleteiras, plataformas e rampas
-- 🔩 **Linha Industrial de Metais** — válvulas (esfera, gaveta, borboleta, globo, sanitária, forjada), conexões, tubos, flanges e acessórios
+- 🔩 **Linha Industrial de Metais** — válvulas (esfera, gaveta, borboleta, globo, sanitária e forjada), conexões, tubos, flanges e acessórios
 
 Atende segmentos como mineração, óleo e gás, alimentício, automotivo, siderurgia e agronegócio.
 
