@@ -90,10 +90,12 @@
 			}
 		} );
 
-		var resizeTimer;
-		$( window ).on( 'resize', function () {
-			clearTimeout( resizeTimer );
-			resizeTimer = setTimeout( function () { self.applyMode(); }, 150 );
+		// Atualiza modo apenas na rotação de tela (orientationchange), não no resize
+		// que no mobile dispara toda vez que a barra de endereço aparece/some
+		window.addEventListener( 'orientationchange', function () {
+			setTimeout( function () {
+				if ( ! self.isOpen ) { self.applyMode(); }
+			}, 300 );
 		} );
 	};
 
