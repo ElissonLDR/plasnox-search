@@ -510,9 +510,12 @@ class Plasnox_Search_Elementor_Widget extends \Elementor\Widget_Base {
 	protected function render() {
 		$s = $this->get_settings_for_display();
 
-		$mode_d = ! empty( $s['display_mode'] )         ? $s['display_mode']         : 'closed';
-		$mode_t = ! empty( $s['display_mode_tablet'] )  ? $s['display_mode_tablet']  : $mode_d;
-		$mode_m = ! empty( $s['display_mode_mobile'] )  ? $s['display_mode_mobile']  : $mode_t;
+		// Cada breakpoint tem padrão independente 'closed'.
+		// Elementor retorna "" quando o valor é igual ao default do controle — tratamos como 'closed'.
+		$valid = [ 'open', 'closed' ];
+		$mode_d = in_array( $s['display_mode'] ?? '', $valid, true )        ? $s['display_mode']        : 'closed';
+		$mode_t = in_array( $s['display_mode_tablet'] ?? '', $valid, true ) ? $s['display_mode_tablet'] : 'closed';
+		$mode_m = in_array( $s['display_mode_mobile'] ?? '', $valid, true ) ? $s['display_mode_mobile'] : 'closed';
 
 		$placeholder = ! empty( $s['placeholder'] ) ? esc_attr( $s['placeholder'] ) : 'Buscar produtos, categorias e soluções...';
 
