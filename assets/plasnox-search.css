@@ -2,7 +2,8 @@
 
 /* ── Wrapper ─────────────────────────────────── */
 .pls-wrapper {
-	--pls-btn-w: 46px; /* atualizado pelo Elementor quando o tamanho do botão muda */
+	--pls-btn-w:   46px;  /* atualizado pelo Elementor via pls_btn_size   */
+	--pls-field-w: 400px; /* atualizado pelo Elementor via field_width     */
 	position: relative;
 	display: inline-block;
 	width: var(--pls-btn-w);
@@ -35,7 +36,7 @@
 	box-shadow: 0 2px 12px rgba(0,96,159,.18);
 }
 
-/* Quando aberto: funde visualmente com o input */
+/* Quando aberto no modo ícone: funde com o input */
 .pls-wrapper.pls-open .pls-toggle {
 	border-left-color: transparent;
 	border-radius: 0 8px 8px 0;
@@ -47,12 +48,12 @@
 .pls-wrapper.pls-open .pls-icon-search { display: none; }
 .pls-wrapper.pls-open .pls-icon-close  { display: flex; }
 
-/* ── Expand (container do input) ─────────────── */
-/* Sempre absoluto: sai do fluxo e sobrepõe o conteúdo ao abrir */
+/* ── Expand — MODO ÍCONE (padrão) ────────────── */
+/* Position absolute: sai do fluxo, sobrepõe conteúdo ao expandir */
 .pls-expand {
 	position: absolute;
 	top: 0;
-	right: var(--pls-btn-w);  /* ancorado à esquerda do botão */
+	right: var(--pls-btn-w);
 	width: 0;
 	height: var(--pls-btn-w);
 	overflow: hidden;
@@ -63,13 +64,25 @@
 }
 
 .pls-wrapper.pls-open .pls-expand {
-	width: 400px; /* sobrescrito pelo widget via selectors do Elementor */
+	width: var(--pls-field-w);
 	overflow: visible;
 }
 
 /* ── Modo: sempre aberto ─────────────────────── */
+/* Volta ao fluxo normal — sem gap entre input e botão */
+.pls-wrapper.pls-mode-open {
+	display: inline-flex;
+	align-items: center;
+	width: auto;
+	height: auto;
+}
+
 .pls-wrapper.pls-mode-open .pls-expand {
-	width: 100%;
+	position: relative;
+	top: auto;
+	right: auto;
+	width: var(--pls-field-w);
+	height: auto;
 	overflow: visible;
 	transition: none;
 }
@@ -79,6 +92,7 @@
 	border-radius: 0 8px 8px 0;
 	box-shadow: none;
 	cursor: default;
+	flex-shrink: 0;
 }
 
 .pls-wrapper.pls-mode-open .pls-icon-search { display: flex; }

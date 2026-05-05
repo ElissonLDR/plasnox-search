@@ -52,8 +52,9 @@ class Plasnox_Search_Elementor_Widget extends \Elementor\Widget_Base {
 				'tablet_default'  => [ 'unit' => 'px', 'size' => 300 ],
 				'mobile_default'  => [ 'unit' => 'px', 'size' => 240 ],
 				'selectors'  => [
+					'{{WRAPPER}} .pls-wrapper' => '--pls-field-w: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .pls-input'   => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .pls-results' => 'width: calc({{SIZE}}{{UNIT}} + {{pls_btn_size.SIZE}}px); max-width: 96vw;',
+					'{{WRAPPER}} .pls-results' => 'width: calc({{SIZE}}{{UNIT}} + var(--pls-btn-w, 46px)); max-width: 96vw;',
 				],
 			] );
 
