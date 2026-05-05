@@ -93,6 +93,11 @@
 	box-shadow: none;
 	cursor: default;
 	flex-shrink: 0;
+	order: 2;
+}
+
+.pls-wrapper.pls-mode-open .pls-expand {
+	order: 1;
 }
 
 .pls-wrapper.pls-mode-open .pls-icon-search { display: flex; }

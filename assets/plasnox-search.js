@@ -5,7 +5,7 @@
 	var DELAY   = 300;
 	var MIN_LEN = 2;
 
-	// Breakpoints padrão do Elementor
+	// Breakpoints padrão do Elementor (mobile ≤ 767, tablet ≤ 1024)
 	var BP_TABLET = 1024;
 	var BP_MOBILE = 767;
 
@@ -44,14 +44,17 @@
 
 	PlsInstance.prototype.applyMode = function () {
 		var mode = this.currentMode();
+		// Sempre começa removendo tudo — estado limpo garantido
+		this.$wrapper.removeClass( 'pls-mode-open pls-open pls-loading' );
+		this.$results.removeClass( 'pls-open' );
+		this.isOpen = false;
+		this.$input.attr( 'tabindex', '-1' );
+		clearTimeout( this.timer );
+
 		if ( mode === 'open' ) {
-			this.$wrapper.addClass( 'pls-mode-open' ).removeClass( 'pls-open' );
+			this.$wrapper.addClass( 'pls-mode-open' );
 			this.$input.attr( 'tabindex', '0' );
 			this.isOpen = true;
-		} else {
-			this.$wrapper.removeClass( 'pls-mode-open pls-open' );
-			this.isOpen = false;
-			this.$input.attr( 'tabindex', '-1' );
 		}
 	};
 
