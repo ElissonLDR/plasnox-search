@@ -254,13 +254,34 @@
 
 	function initAll() {
 		$( '.pls-wrapper' ).each( function () {
-			if ( ! $( this ).data( 'pls-init' ) ) {
-				$( this ).data( 'pls-init', new PlsInstance( $( this ) ) );
+			var $w = $( this );
+			var inst = $w.data( 'pls-init' );
+			if ( inst ) {
+				// já inicializado: garante estado limpo
+				if ( inst.currentMode() !== 'open' ) {
+					inst.closeSearch( true );
+				}
+			} else {
+				$w.data( 'pls-init', new PlsInstance( $w ) );
 			}
 		} );
 	}
 
 	$( document ).ready( initAll );
+
+	// Garante estado limpo ao voltar via bfcache (back/forward do browser)
+	window.addEventListener( 'pageshow', function ( e ) {
+		if ( e.persisted ) {
+			$( '.pls-wrapper' ).each( function () {
+				var inst = $( this ).data( 'pls-init' );
+				if ( inst ) {
+					if ( inst.currentMode() !== 'open' ) {
+						inst.closeSearch( true );
+					}
+				}
+			} );
+		}
+	} );
 
 	// Suporte ao editor do Elementor (atualiza quando o widget é renderizado)
 	$( window ).on( 'elementor/frontend/init', function () {
