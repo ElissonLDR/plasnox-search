@@ -80,7 +80,8 @@ class Plasnox_Search_Elementor_Widget extends \Elementor\Widget_Base {
 				'range'      => [ 'px' => [ 'min' => 32, 'max' => 80 ] ],
 				'default'    => [ 'unit' => 'px', 'size' => 46 ],
 				'selectors'  => [
-					'{{WRAPPER}} .pls-toggle' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .pls-toggle'  => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .pls-wrapper' => '--pls-btn-w: {{SIZE}}{{UNIT}};',
 				],
 			] );
 

@@ -2,17 +2,20 @@
 
 /* ── Wrapper ─────────────────────────────────── */
 .pls-wrapper {
+	--pls-btn-w: 46px; /* atualizado pelo Elementor quando o tamanho do botão muda */
 	position: relative;
-	display: inline-flex;
-	align-items: center;
+	display: inline-block;
+	width: var(--pls-btn-w);
+	height: var(--pls-btn-w);
 	font-family: 'Montserrat', sans-serif;
 }
 
 /* ── Botão toggle (caixa da lupa) ────────────── */
 .pls-toggle {
-	flex-shrink: 0;
-	width: 46px;
-	height: 46px;
+	position: relative;
+	z-index: 2;
+	width: var(--pls-btn-w);
+	height: var(--pls-btn-w);
 	background: #ffffff;
 	border: 2px solid #d0d8e4;
 	border-radius: 8px;
@@ -23,7 +26,6 @@
 	color: #00609F;
 	box-shadow: 0 2px 8px rgba(0,14,39,.08);
 	transition: border-color .2s, box-shadow .2s, background .2s, color .2s;
-	z-index: 2;
 	padding: 0;
 	line-height: 1;
 }
@@ -46,13 +48,18 @@
 .pls-wrapper.pls-open .pls-icon-close  { display: flex; }
 
 /* ── Expand (container do input) ─────────────── */
+/* Sempre absoluto: sai do fluxo e sobrepõe o conteúdo ao abrir */
 .pls-expand {
+	position: absolute;
+	top: 0;
+	right: var(--pls-btn-w);  /* ancorado à esquerda do botão */
 	width: 0;
+	height: var(--pls-btn-w);
 	overflow: hidden;
 	transition: width .35s cubic-bezier(.4,0,.2,1);
-	position: relative;
 	display: flex;
 	align-items: center;
+	z-index: 1;
 }
 
 .pls-wrapper.pls-open .pls-expand {
@@ -62,7 +69,7 @@
 
 /* ── Modo: sempre aberto ─────────────────────── */
 .pls-wrapper.pls-mode-open .pls-expand {
-	width: 400px !important;
+	width: 400px;
 	overflow: visible;
 	transition: none;
 }
