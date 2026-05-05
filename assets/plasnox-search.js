@@ -45,14 +45,13 @@
 	PlsInstance.prototype.applyMode = function () {
 		var mode = this.currentMode();
 		if ( mode === 'open' ) {
-			this.$wrapper.addClass( 'pls-mode-open pls-open' );
+			this.$wrapper.addClass( 'pls-mode-open' ).removeClass( 'pls-open' );
 			this.$input.attr( 'tabindex', '0' );
 			this.isOpen = true;
 		} else {
-			this.$wrapper.removeClass( 'pls-mode-open' );
-			if ( ! this.isOpen ) {
-				this.$input.attr( 'tabindex', '-1' );
-			}
+			this.$wrapper.removeClass( 'pls-mode-open pls-open' );
+			this.isOpen = false;
+			this.$input.attr( 'tabindex', '-1' );
 		}
 	};
 
@@ -62,6 +61,9 @@
 		self.$toggle.on( 'click', function () { self.onToggle(); } );
 		self.$input.on( 'input keyup', function () { self.onInput(); } );
 		self.$input.on( 'keydown', function ( e ) { self.onKey( e ); } );
+		self.$results.on( 'click', 'a.pls-item', function () {
+			if ( self.currentMode() !== 'open' ) { self.closeSearch( true ); }
+		} );
 
 		$( document ).on( 'click touchstart', function ( e ) {
 			if ( self.isOpen && ! $( e.target ).closest( self.$wrapper ).length ) {
