@@ -69,7 +69,7 @@
 
 /* ── Modo: sempre aberto ─────────────────────── */
 .pls-wrapper.pls-mode-open .pls-expand {
-	width: 400px;
+	width: 100%;
 	overflow: visible;
 	transition: none;
 }
