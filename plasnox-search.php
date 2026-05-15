@@ -330,9 +330,11 @@ class Plasnox_Search {
 			),
 		);
 
+		$q_norm = $this->remove_accents_lower( $query );
+
 		$results = array();
 		foreach ( $items as $item ) {
-			if ( mb_stripos( $item['title'], $query ) !== false ) {
+			if ( mb_stripos( $this->remove_accents_lower( $item['title'] ), $q_norm ) !== false ) {
 				$results[] = array(
 					'title' => $item['title'],
 					'url'   => $url,
@@ -343,6 +345,10 @@ class Plasnox_Search {
 		}
 
 		return $results;
+	}
+
+	private function remove_accents_lower( $str ) {
+		return mb_strtolower( remove_accents( $str ) );
 	}
 
 	// ─────────────────────────────────────────────
