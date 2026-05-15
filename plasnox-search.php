@@ -294,6 +294,11 @@ class Plasnox_Search {
 
 		$items = array(
 			array(
+				'title' => 'Plástico',
+				'meta'  => 'Linha Plástico',
+				'thumb' => '',
+			),
+			array(
 				'title' => 'Preformas PET',
 				'meta'  => 'Linha Plástico',
 				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Preformas-PET-300x200.jpg',
