@@ -171,6 +171,11 @@
 			self.$results.append( mkGroup( i18n.solutions ) );
 			$.each( data.solutions, function ( i, item ) { self.$results.append( mkItem( item ) ); } );
 		}
+		if ( data.plastico && data.plastico.length ) {
+			any = true;
+			self.$results.append( mkGroup( i18n.plastico ) );
+			$.each( data.plastico, function ( i, item ) { self.$results.append( mkItem( item ) ); } );
+		}
 		if ( ! any ) {
 			self.$results.append( '<p class="pls-empty">' + esc( i18n.no_results ) + '</p>' );
 		}

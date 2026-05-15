@@ -65,6 +65,7 @@ class Plasnox_Search {
 				'products'    => 'Produtos',
 				'categories'  => 'Categorias',
 				'solutions'   => 'Soluções Industriais',
+				'plastico'    => 'Linha Plástico',
 				'no_results'  => 'Nenhum resultado encontrado.',
 				'placeholder' => 'Buscar produtos, categorias e soluções...',
 			),
@@ -120,13 +121,14 @@ class Plasnox_Search {
 		$q = isset( $_POST['query'] ) ? sanitize_text_field( wp_unslash( $_POST['query'] ) ) : '';
 
 		if ( mb_strlen( trim( $q ) ) < 2 ) {
-			wp_send_json_success( array( 'products' => array(), 'categories' => array(), 'solutions' => array() ) );
+			wp_send_json_success( array( 'products' => array(), 'categories' => array(), 'solutions' => array(), 'plastico' => array() ) );
 		}
 
 		wp_send_json_success( array(
 			'products'   => $this->search_products( $q ),
 			'categories' => $this->search_categories( $q ),
 			'solutions'  => $this->search_solutions( $q ),
+			'plastico'   => $this->search_plastico( $q ),
 		) );
 	}
 
@@ -278,6 +280,61 @@ class Plasnox_Search {
 				'thumb' => $thumb ? $thumb : '',
 				'meta'  => 'Solução Industrial',
 			);
+		}
+
+		return $results;
+	}
+
+	// ─────────────────────────────────────────────
+	// Linha Plástico (itens fixos — todos apontam para /solucoes/plastico/)
+	// ─────────────────────────────────────────────
+
+	private function search_plastico( $query ) {
+		$url = home_url( '/solucoes/plastico/' );
+
+		$items = array(
+			array(
+				'title' => 'Preformas PET',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Preformas-PET-300x200.jpg',
+			),
+			array(
+				'title' => 'Resinas',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Resinas-300x200.jpg',
+			),
+			array(
+				'title' => 'Garrafas',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Garrafas-300x200.jpg',
+			),
+			array(
+				'title' => 'Tampas',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Tampas-300x200.jpg',
+			),
+			array(
+				'title' => 'Alças',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Alcas-300x200.jpg',
+			),
+			array(
+				'title' => 'Projetos',
+				'meta'  => 'Linha Plástico',
+				'thumb' => 'https://plasnox.com.br/wp-content/uploads/2026/05/Imagem-destaque-Projetos-300x200.jpg',
+			),
+		);
+
+		$results = array();
+		foreach ( $items as $item ) {
+			if ( mb_stripos( $item['title'], $query ) !== false ) {
+				$results[] = array(
+					'title' => $item['title'],
+					'url'   => $url,
+					'thumb' => $item['thumb'],
+					'meta'  => $item['meta'],
+				);
+			}
 		}
 
 		return $results;
