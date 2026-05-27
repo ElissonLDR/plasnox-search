@@ -1,4 +1,4 @@
-/* Plasnox Search v1.5.0 */
+/* Plasnox Search v1.5.1 */
 ( function ( $ ) {
 	'use strict';
 
@@ -20,32 +20,60 @@
 		self.focusIdx = -1;
 		self.isOpen   = false;
 
-		// Lê o modo correto para o viewport atual diretamente dos data attributes
-		self.mode = self.getMode();
+		self.bind();
+		self.applyMode( true );
+	}
 
-		// Estado inicial limpo
+	PlsInstance.prototype.getDevice = function () {
+		if ( typeof elementorFrontend !== 'undefined' && elementorFrontend.getCurrentDeviceMode ) {
+			var em = elementorFrontend.getCurrentDeviceMode();
+			if ( em === 'mobile' || em === 'tablet' || em === 'desktop' || em === 'widescreen' ) {
+				return em === 'widescreen' ? 'desktop' : em;
+			}
+		}
+		var w = window.innerWidth;
+		if ( w <= 767 ) {
+			return 'mobile';
+		}
+		if ( w <= 1024 ) {
+			return 'tablet';
+		}
+		return 'desktop';
+	};
+
+	PlsInstance.prototype.getMode = function () {
+		var device  = this.getDevice();
+		var attrKey = device === 'mobile' ? 'mode-m' : ( device === 'tablet' ? 'mode-t' : 'mode-d' );
+		return this.$wrapper.data( attrKey ) || this.$wrapper.attr( 'data-' + attrKey ) || 'closed';
+	};
+
+	PlsInstance.prototype.applyMode = function ( isInit ) {
+		var self    = this;
+		var newMode = self.getMode();
+
+		if ( ! isInit && newMode === self.mode ) {
+			return;
+		}
+
+		self.mode = newMode;
 		self.$wrapper.removeClass( 'pls-open pls-mode-open pls-loading' );
 		self.$results.removeClass( 'pls-open' );
-		self.$input.val( '' ).attr( 'tabindex', '-1' );
+		self.$toggle.attr( 'aria-expanded', 'false' );
+		self.last = '';
+		clearTimeout( self.timer );
 
 		if ( self.mode === 'open' ) {
 			self.$wrapper.addClass( 'pls-mode-open' );
 			self.$input.attr( 'tabindex', '0' );
 			self.isOpen = true;
+			return;
 		}
 
-		self.bind();
-	}
-
-	PlsInstance.prototype.getMode = function () {
-		var w = window.innerWidth;
-		if ( w <= 767 ) {
-			return this.$wrapper.data( 'mode-m' ) || 'closed';
+		self.isOpen = false;
+		self.$input.attr( 'tabindex', '-1' );
+		if ( ! isInit ) {
+			self.$input.val( '' );
 		}
-		if ( w <= 1024 ) {
-			return this.$wrapper.data( 'mode-t' ) || 'closed';
-		}
-		return this.$wrapper.data( 'mode-d' ) || 'closed';
 	};
 
 	PlsInstance.prototype.bind = function () {
@@ -214,6 +242,15 @@
 
 	// ── Init ─────────────────────────────────────
 
+	function refreshAllModes() {
+		$( '.pls-wrapper' ).each( function () {
+			var inst = $( this ).data( 'pls-init' );
+			if ( inst ) {
+				inst.applyMode( false );
+			}
+		} );
+	}
+
 	function initAll() {
 		$( '.pls-wrapper' ).each( function () {
 			var $w = $( this );
@@ -223,7 +260,35 @@
 		} );
 	}
 
-	$( document ).ready( initAll );
+	var resizeTimer;
+	function onViewportChange() {
+		clearTimeout( resizeTimer );
+		resizeTimer = setTimeout( refreshAllModes, 120 );
+	}
+
+	function watchElementorDeviceMode() {
+		var body = document.body;
+		if ( ! body || typeof MutationObserver === 'undefined' ) {
+			return;
+		}
+		var last = '';
+		var obs  = new MutationObserver( function () {
+			var match = body.className.match( /elementor-device-(desktop|tablet|mobile)/ );
+			var dev   = match ? match[1] : '';
+			if ( dev && dev !== last ) {
+				last = dev;
+				refreshAllModes();
+			}
+		} );
+		obs.observe( body, { attributes: true, attributeFilter: [ 'class' ] } );
+	}
+
+	$( document ).ready( function () {
+		initAll();
+		watchElementorDeviceMode();
+	} );
+
+	$( window ).on( 'resize orientationchange', onViewportChange );
 
 	// Limpa estado ao voltar via bfcache
 	window.addEventListener( 'pageshow', function ( e ) {
@@ -236,14 +301,17 @@
 
 	// Suporte ao editor Elementor
 	$( window ).on( 'elementor/frontend/init', function () {
-		if ( window.elementorFrontend ) {
-			elementorFrontend.hooks.addAction( 'frontend/element_ready/plasnox_search.default', function ( $el ) {
-				$el.find( '.pls-wrapper' ).each( function () {
-					$( this ).removeData( 'pls-init' );
-				} );
-				initAll();
-			} );
+		if ( ! window.elementorFrontend ) {
+			return;
 		}
+		elementorFrontend.hooks.addAction( 'frontend/element_ready/plasnox_search.default', function ( $el ) {
+			$el.find( '.pls-wrapper' ).each( function () {
+				$( this ).removeData( 'pls-init' );
+			} );
+			initAll();
+		} );
+		elementorFrontend.on( 'change:deviceMode', refreshAllModes );
+		$( window ).on( 'elementor/device-mode/change', refreshAllModes );
 	} );
 
 }( jQuery ) );

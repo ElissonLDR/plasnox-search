@@ -1,4 +1,4 @@
-/* Plasnox Search v1.5.0 */
+/* Plasnox Search v1.5.1 */
 
 /* ── Wrapper ─────────────────────────────────── */
 .pls-wrapper {
@@ -68,8 +68,84 @@
 	overflow: visible;
 }
 
-/* ── Modo: sempre aberto ─────────────────────── */
-/* Volta ao fluxo normal — sem gap entre input e botão */
+/* ── Modo: sempre aberto (CSS por breakpoint + preview Elementor) ── */
+@media (min-width: 1025px) {
+	.pls-wrapper[data-mode-d="open"] { display: inline-flex; align-items: center; width: auto; height: auto; }
+	.pls-wrapper[data-mode-d="open"] .pls-expand {
+		position: relative; top: auto; right: auto;
+		width: var(--pls-field-w); height: auto; overflow: visible; transition: none; order: 1;
+	}
+	.pls-wrapper[data-mode-d="open"] .pls-toggle {
+		border-left-color: transparent; border-radius: 0 8px 8px 0;
+		box-shadow: none; cursor: default; flex-shrink: 0; order: 2;
+	}
+	.pls-wrapper[data-mode-d="open"] .pls-icon-search { display: flex; }
+	.pls-wrapper[data-mode-d="open"] .pls-icon-close  { display: none !important; }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+	.pls-wrapper[data-mode-t="open"] { display: inline-flex; align-items: center; width: auto; height: auto; }
+	.pls-wrapper[data-mode-t="open"] .pls-expand {
+		position: relative; top: auto; right: auto;
+		width: var(--pls-field-w); height: auto; overflow: visible; transition: none; order: 1;
+	}
+	.pls-wrapper[data-mode-t="open"] .pls-toggle {
+		border-left-color: transparent; border-radius: 0 8px 8px 0;
+		box-shadow: none; cursor: default; flex-shrink: 0; order: 2;
+	}
+	.pls-wrapper[data-mode-t="open"] .pls-icon-search { display: flex; }
+	.pls-wrapper[data-mode-t="open"] .pls-icon-close  { display: none !important; }
+}
+@media (max-width: 767px) {
+	.pls-wrapper[data-mode-m="open"] { display: inline-flex; align-items: center; width: auto; height: auto; }
+	.pls-wrapper[data-mode-m="open"] .pls-expand {
+		position: relative; top: auto; right: auto;
+		width: var(--pls-field-w); height: auto; overflow: visible; transition: none; order: 1;
+	}
+	.pls-wrapper[data-mode-m="open"] .pls-toggle {
+		border-left-color: transparent; border-radius: 0 8px 8px 0;
+		box-shadow: none; cursor: default; flex-shrink: 0; order: 2;
+	}
+	.pls-wrapper[data-mode-m="open"] .pls-icon-search { display: flex; }
+	.pls-wrapper[data-mode-m="open"] .pls-icon-close  { display: none !important; }
+}
+/* Preview do Elementor (body class — iframe pode não disparar @media) */
+body.elementor-device-desktop .pls-wrapper[data-mode-d="open"],
+body.elementor-device-tablet .pls-wrapper[data-mode-t="open"],
+body.elementor-device-mobile .pls-wrapper[data-mode-m="open"] {
+	display: inline-flex;
+	align-items: center;
+	width: auto;
+	height: auto;
+}
+body.elementor-device-desktop .pls-wrapper[data-mode-d="open"] .pls-expand,
+body.elementor-device-tablet .pls-wrapper[data-mode-t="open"] .pls-expand,
+body.elementor-device-mobile .pls-wrapper[data-mode-m="open"] .pls-expand {
+	position: relative;
+	top: auto;
+	right: auto;
+	width: var(--pls-field-w);
+	height: auto;
+	overflow: visible;
+	transition: none;
+	order: 1;
+}
+body.elementor-device-desktop .pls-wrapper[data-mode-d="open"] .pls-toggle,
+body.elementor-device-tablet .pls-wrapper[data-mode-t="open"] .pls-toggle,
+body.elementor-device-mobile .pls-wrapper[data-mode-m="open"] .pls-toggle {
+	border-left-color: transparent;
+	border-radius: 0 8px 8px 0;
+	box-shadow: none;
+	cursor: default;
+	flex-shrink: 0;
+	order: 2;
+}
+body.elementor-device-desktop .pls-wrapper[data-mode-d="open"] .pls-icon-search,
+body.elementor-device-tablet .pls-wrapper[data-mode-t="open"] .pls-icon-search,
+body.elementor-device-mobile .pls-wrapper[data-mode-m="open"] .pls-icon-search { display: flex; }
+body.elementor-device-desktop .pls-wrapper[data-mode-d="open"] .pls-icon-close,
+body.elementor-device-tablet .pls-wrapper[data-mode-t="open"] .pls-icon-close,
+body.elementor-device-mobile .pls-wrapper[data-mode-m="open"] .pls-icon-close { display: none !important; }
+
 .pls-wrapper.pls-mode-open {
 	display: inline-flex;
 	align-items: center;
@@ -102,6 +178,20 @@
 
 .pls-wrapper.pls-mode-open .pls-icon-search { display: flex; }
 .pls-wrapper.pls-mode-open .pls-icon-close  { display: none !important; }
+
+/* No editor: modo ícone não deve manter expand aberto ao trocar dispositivo */
+body.elementor-device-desktop .pls-wrapper[data-mode-d="closed"]:not(.pls-open),
+body.elementor-device-tablet .pls-wrapper[data-mode-t="closed"]:not(.pls-open),
+body.elementor-device-mobile .pls-wrapper[data-mode-m="closed"]:not(.pls-open) {
+	width: var(--pls-btn-w);
+	height: var(--pls-btn-w);
+}
+body.elementor-device-desktop .pls-wrapper[data-mode-d="closed"]:not(.pls-open) .pls-expand,
+body.elementor-device-tablet .pls-wrapper[data-mode-t="closed"]:not(.pls-open) .pls-expand,
+body.elementor-device-mobile .pls-wrapper[data-mode-m="closed"]:not(.pls-open) .pls-expand {
+	width: 0;
+	overflow: hidden;
+}
 
 /* ── Input ───────────────────────────────────── */
 .pls-input {

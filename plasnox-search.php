@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Plasnox Search
  * Description: Busca unificada de produtos WooCommerce, categorias e páginas da linha industrial (Metais).
- * Version: 1.5.0
+ * Version: 1.5.1
  * Author: Elisson Rodrigues
  * Text Domain: plasnox-search
  * Requires at least: 6.0
@@ -47,14 +47,14 @@ class Plasnox_Search {
 			'plasnox-search',
 			$base . 'assets/plasnox-search.css',
 			array(),
-			'1.5.0'
+			'1.5.1'
 		);
 
 		wp_enqueue_script(
 			'plasnox-search',
 			$base . 'assets/plasnox-search.js',
 			array( 'jquery' ),
-			'1.5.0',
+			'1.5.1',
 			true
 		);
 
